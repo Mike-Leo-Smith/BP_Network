@@ -17,26 +17,4 @@ namespace bp
 		double s = (*this)(x);
 		return s * (1 - s);
 	}
-	
-	const Eigen::VectorXd Sigmoid::operator()(const Eigen::VectorXd &v) const
-	{
-		Eigen::VectorXd result(v);
-		
-		for (size_t i = 0; i < v.size(); i++)
-		{
-			result[i] = (*this)(result[i]);
-		}
-		return result;
-	}
-	
-	const Eigen::VectorXd Sigmoid::derivative(const Eigen::VectorXd &v) const
-	{
-		Eigen::VectorXd result(v);
-		
-		for (size_t i = 0; i < v.size(); i++)
-		{
-			result[i] = derivative(result[i]);
-		}
-		return result;
-	}
 }

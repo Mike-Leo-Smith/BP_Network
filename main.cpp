@@ -1,19 +1,22 @@
 #include <iostream>
 #include <eigen3/Eigen/Core>
 #include "Network/network.h"
+#include "Network/mnist_loader.h"
 
 int main()
 {
-	Eigen::VectorXd input(3);
-	Eigen::MatrixXd mat(2, 3);
-	bp::Network network;
+	std::vector<bp::Data> training, test;
+	std::vector<size_t> sizes;
 	
-	input << 1.0, 2.0, 3.0;
+	sizes.push_back(28 * 28);
+	sizes.push_back(50);
+	sizes.push_back(100);
+	sizes.push_back(70);
+	sizes.push_back(10);
 	
-	std::cout << input * input.transpose() << std::endl;
-	std::cout << network.predict(input) << std::endl;
-	
-	network.train();
+	load_mnist(training, test);
+	bp::Network network(sizes);
+	network.train(training, test, 300, 20, 1.0);
 	
 	return 0;
 }

@@ -14,8 +14,6 @@ namespace bp
 	public:
 		virtual double operator()(double x) const override;
 		virtual double derivative(double x) const override;
-		virtual const Eigen::VectorXd operator()(const Eigen::VectorXd &v) const override;
-		virtual const Eigen::VectorXd derivative(const Eigen::VectorXd &v) const override;
 	};
 }
 

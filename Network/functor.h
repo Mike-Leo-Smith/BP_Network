@@ -14,8 +14,8 @@ namespace bp
 	public:
 		virtual double operator()(double x) const = 0;
 		virtual double derivative(double x) const = 0;
-		virtual const Eigen::VectorXd operator()(const Eigen::VectorXd &v) const = 0;
-		virtual const Eigen::VectorXd derivative(const Eigen::VectorXd &v) const = 0;
+		virtual const Eigen::VectorXd operator()(const Eigen::VectorXd &v) const;
+		virtual const Eigen::VectorXd derivative(const Eigen::VectorXd &v) const;
 	};
 }
 

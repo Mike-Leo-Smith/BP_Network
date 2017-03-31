@@ -6,8 +6,10 @@
 #define BP_NETWORK_NETWORK_H
 
 #include <vector>
+#include <iostream>
 #include "layer.h"
 #include "sigmoid.h"
+#include "data.h"
 
 namespace bp
 {
@@ -17,42 +19,9 @@ namespace bp
 		std::vector<BaseLayer *> _layers;
 		
 	public:
-		Network(void)
-		{
-			_layers.push_back(new Layer<Sigmoid>(3, 5));
-			_layers.push_back(new Layer<Sigmoid>(5, 7));
-			_layers.push_back(new Layer<Sigmoid>(7, 10));
-		}
-		
-		const Eigen::VectorXd predict(const Eigen::VectorXd &input_vector) const
-		{
-			Eigen::VectorXd result(input_vector);
-			
-			for (const BaseLayer *layer : _layers)
-			{
-				result = layer->predict(result);
-			}
-			return result;
-		}
-		
-		void train(void)
-		{
-			Eigen::VectorXd input(3);
-			Eigen::VectorXd expected(10);
-			
-			input.setRandom();
-			expected.setRandom();
-			
-			for (BaseLayer *layer : _layers)
-			{
-				layer->feedforward(input);
-				input = layer->activation();
-			}
-			
-			_layers[2]->backpropagate(expected);
-			_layers[1]->backpropagate(*_layers[2]);
-			_layers[0]->backpropagate(*_layers[1]);
-		}
+		Network(const std::vector<size_t> &sizes_of_layers);
+		double predict(const Eigen::VectorXd &input_vector) const;
+		void train(const std::vector<Data> &training_data, const std::vector<Data> test_data, size_t epochs, size_t mini_batch_size, double learning_rate);
 	};
 }
 
